@@ -58,8 +58,8 @@
                                 <td th:text="${customer.address.phone}"></td>
                                 <td th:text="${customer.email}"></td>
                                 <td th:text="${customer.active}"></td> 
-                                <td><a th:tref="@{/customers/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
-                                <td><a th:tref="@{/customers/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
+                                <td><a th:href="@{/customers/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
+                                <td><a th:href="@{/customers/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>

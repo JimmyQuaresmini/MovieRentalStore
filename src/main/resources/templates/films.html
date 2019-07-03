@@ -30,25 +30,14 @@
                                 <td th:text="${movie.description}"></td>
                                 <td th:text="${movie.release_year}"></td>
                                 <td th:text="${movie.rating}"></td>
-                                <td><a th:tref="@{/edit/{id}(id=${movie.film_id})}">Edit</a></td>
-                                <td><a th:tref="@{/delete/{id}(id=${movie.film_id})}">Delete</a></td>
+                                <td><a th:href="@{/edit/{id}(id=${movie.film_id})}">Edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id=${movie.film_id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             <p><a href="/">Index</a></p> <!--(sign up a new user)-->
-        </div>
-        
-        <!--<form action="#" th:action="@{}" th:object="${}" method="post">
-            <label></label>
-            <input/>
-            <span></span>
-            <label></label>
-            <input/>
-            <span></span>
-            <input/>
-        </form>-->
-        
+        </div>        
         
     </body>
 </html>

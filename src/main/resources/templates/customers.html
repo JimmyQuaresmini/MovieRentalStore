@@ -15,6 +15,9 @@
                             <tr>
                                 <th>First name</th>
                                 <th>Last name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Postal code</th>
                                 <th>Email</th>                                
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -24,9 +27,12 @@
                             <tr th:each="customer : ${customers}">
                                 <td th:text="${customer.first_name}"></td>
                                 <td th:text="${customer.last_name}"></td>
+                                <td th:text="${customer.address.address}"></td>
+                                <td th:text="${customer.address.city.city}"></td>                                
+                                <td th:text="${customer.address.postal_code}"></td>
                                 <td th:text="${customer.email}"></td>                                
-                                <td><a th:tref="@{/customer/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
-                                <td><a th:tref="@{/customer/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
+                                <td><a th:href="@{/customer/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
+                                <td><a th:href="@{/customer/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>

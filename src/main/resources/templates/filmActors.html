@@ -9,14 +9,13 @@
         <div th:switch="${actors}">
             <h2 th:case="null">No actors yet!</h2>
                 <div th:case="*">
-                    <h2>Movies</h2>
+                    <h2>Actors</h2>
                     <table>
                         <thead>
                             <tr>
-                                <th>Rentals?</th>
-                                <th>Description</th>
-                                <th>Release year</th>
-                                <th>Rating</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Movies</th>                                
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -25,10 +24,9 @@
                             <tr th:each="actor : ${actors}">
                                 <td th:text="${actor.title}"></td>
                                 <td th:text="${actor.description}"></td>
-                                <td th:text="${actor.release_year}"></td>
-                                <td th:text="${actor.rating}"></td>
-                                <td><a th:tref="@{/edit/{id}(id=${actor.actor_id})}">Edit</a></td>
-                                <td><a th:tref="@{/delete/{id}(id=${actor.actor_id})}">Delete</a></td>
+                                <td th:text="${actor.films.title}"></td>                                
+                                <td><a th:href="@{/edit/{id}(id=${actor.actor_id})}">Edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id=${actor.actor_id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
