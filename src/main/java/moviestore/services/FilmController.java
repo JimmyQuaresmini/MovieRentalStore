@@ -3,6 +3,7 @@ package moviestore.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 
 import moviestore.entities.Film;
 import moviestore.entities.Language;
@@ -11,8 +12,10 @@ import moviestore.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,5 +92,39 @@ public class FilmController {
     public @ResponseBody List<String> findActorTitleById(@PathVariable("id") int id) { 
         List<String> itFilms = filmRepository.findActorTitleById(id);
         return itFilms; 
+    }
+        
+    @GetMapping(path="/edit/{id}") 
+    public String editFilm(@PathVariable("id") int id, Model model) { 
+        Film film = filmRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid film id: " + id));
+        
+        model.addAttribute("film", film);
+        return "updateFilm";
+    }
+    
+    @PostMapping(path="/update/{id}") 
+    public String updateFilm(@PathVariable("id") int id, @Valid Film film, 
+            BindingResult result, Model model) {
+        if (result.hasErrors() == true) {
+            film.setFilm_id(id);
+            return "updateFilm";
+        }
+        
+        //store, address, create_date are not updated here
+        
+        film.setLast_update(LocalDateTime.now());
+        filmRepository.save(film);
+        model.addAttribute("films", filmRepository.findAll());
+        return "films";
+    }
+    
+    @GetMapping(path="/delete/{id}") 
+    public String deleteFilm(@PathVariable("id") int id, Model model) { 
+        Film film = filmRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid film id: " + id));
+        filmRepository.delete(film);
+        model.addAttribute("films", filmRepository.findAll());
+        return "films";
     }
 }

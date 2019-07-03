@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Update a film</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1>Update Film</h1>
+        
+        <div>Fill in the form to update the film</div>
+        
+        <form action="#" th:action="@{/film/update/{id}(id=${film.film_id})}" th:object="${film}" method="post">            
+            <label for="title">Title</label>
+            <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+            <label for="description">Description</label>
+            <input type="text" th:field="*{description}" id="description" placeholder="Description"/>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            <label for="release_year">Release year</label>
+            <input type="text" th:field="*{release_year}" id="release_year" placeholder="Release year" />
+            <span th:if="${#fields.hasErrors('release_year')}" th:errors="*{release_year}"></span>
+            <label for="rental_duration">Rental duration</label>
+            <input type="text" th:field="*{rental_duration}" id="rental_duration" placeholder="Rental duration" />
+            <span th:if="${#fields.hasErrors('rental_duration')}" th:errors="*{rental_duration}"></span>
+            
+            <input type="submit" value="Update film"/>
+        </form>
+        
+        <div th:switch="${film}">
+            <h2 th:case="null">No film yet!</h2>
+                <div th:case="*">
+                    <h2>Film</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Release year</th>
+                                <th>Rental duration</th>
+                                <th>Rental rate</th>
+                                <th>Length</th>
+                                <th>Replacement cost</th>
+                                <th>Rating</th>                                
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            <tr th:object="${film}">
+                                <td th:text="${film.title}"></td>
+                                <td th:text="${film.description}"></td>
+                                <td th:text="${film.release_year}"></td>                                
+                                <td th:text="${film.rental_duration}"></td>
+                                <td th:text="${film.rental_rate}"></td>
+                                <td th:text="${film.length}"></td>
+                                <td th:text="${film.replacement_cost}"></td>
+                                <td th:text="${film.rating}"></td>
+                                <td><a th:href="@{/film/edit/{id}(id=${film.film_id})}">Edit</a></td>
+                                <td><a th:href="@{/film/delete/{id}(id=${film.film_id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <p><a href="/">Index</a></p>
+        </div>
+    </body>
+</html>

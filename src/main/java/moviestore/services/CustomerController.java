@@ -58,7 +58,7 @@ public class CustomerController {
     @GetMapping(path="/edit/{id}") 
     public String editCustomer(@PathVariable("id") int id, Model model) { 
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid customer id: " + id));
         
         model.addAttribute("customer", customer);
         return "updateCustomer";
@@ -83,7 +83,7 @@ public class CustomerController {
     @GetMapping(path="/delete/{id}") 
     public String deleteCustomer(@PathVariable("id") int id, Model model) { 
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid customer id: " + id));
         customerRepository.delete(customer);
         model.addAttribute("customers", customerRepository.findAll());
         return "customers";

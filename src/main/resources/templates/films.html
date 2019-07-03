@@ -4,7 +4,7 @@
         <title>Movies for rent from the database</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/views.css}" />
+        <link rel="stylesheet" type="text/css" href="/css/views.css" />
     </head>
     <body>
         <h1>Movies currently available for rent</h1>
@@ -30,8 +30,8 @@
                                 <td th:text="${movie.description}"></td>
                                 <td th:text="${movie.release_year}"></td>
                                 <td th:text="${movie.rating}"></td>
-                                <td><a th:href="@{/edit/{id}(id=${movie.film_id})}">Edit</a></td>
-                                <td><a th:href="@{/delete/{id}(id=${movie.film_id})}">Delete</a></td>
+                                <td><a th:href="@{/film/edit/{id}(id=${movie.film_id})}">Edit</a></td>
+                                <td><a th:href="@{/film/delete/{id}(id=${movie.film_id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
