@@ -1,0 +1,17 @@
+/* 
+    Created on : 2019-jul-01, 13:49:35
+    Author     : Jimmy
+*/
+
+body {
+    background: linear-gradient(#00ffff, #ffffff);
+}
+
+thead {}
+
+tbody {}
+
+tr:nth-child(even) {
+    background-color: aquamarine; /*floralwhite*/
+}
+

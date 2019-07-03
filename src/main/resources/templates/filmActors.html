@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Movie actors from the database</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div th:switch="${actors}">
+            <h2 th:case="null">No actors yet!</h2>
+                <div th:case="*">
+                    <h2>Movies</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rentals?</th>
+                                <th>Description</th>
+                                <th>Release year</th>
+                                <th>Rating</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="actor : ${actors}">
+                                <td th:text="${actor.title}"></td>
+                                <td th:text="${actor.description}"></td>
+                                <td th:text="${actor.release_year}"></td>
+                                <td th:text="${actor.rating}"></td>
+                                <td><a th:tref="@{/edit/{id}(id=${actor.actor_id})}">Edit</a></td>
+                                <td><a th:tref="@{/delete/{id}(id=${actor.actor_id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <p><a href="/">Index</a></p>
+        </div>
+    </body>
+</html>

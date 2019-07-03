@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Movies for rent from the database</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/views.css}" />
+    </head>
+    <body>
+        <h1>Movies currently available for rent</h1>
+        
+        <div th:switch="${movies}">
+            <h2 th:case="null">No movies yet!</h2>
+                <div th:case="*">
+                    <h2>Movies</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Release year</th>
+                                <th>Rating</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="movie : ${movies}">
+                                <td th:text="${movie.title}"></td>
+                                <td th:text="${movie.description}"></td>
+                                <td th:text="${movie.release_year}"></td>
+                                <td th:text="${movie.rating}"></td>
+                                <td><a th:tref="@{/edit/{id}(id=${movie.film_id})}">Edit</a></td>
+                                <td><a th:tref="@{/delete/{id}(id=${movie.film_id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <p><a href="/">Index</a></p> <!--(sign up a new user)-->
+        </div>
+        
+        <!--<form action="#" th:action="@{}" th:object="${}" method="post">
+            <label></label>
+            <input/>
+            <span></span>
+            <label></label>
+            <input/>
+            <span></span>
+            <input/>
+        </form>-->
+        
+        
+    </body>
+</html>

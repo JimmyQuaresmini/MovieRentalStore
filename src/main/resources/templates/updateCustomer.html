@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Update Customer</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1>Update Customer</h1>
+        
+        <div>Fill in the form to update the customer</div>
+        
+        <form action="#" th:action="@{/customer/update/{id}(id=${customer.customer_id})}" th:object="${customer}" method="post">
+            <!--store could be asked about here -->
+            <label for="first_name">First name</label>
+            <input type="text" th:field="*{first_name}" id="first_name" placeholder="First name" />
+            <span th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></span>
+            <label for="last_name">Last name</label>
+            <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last name"/>
+            <span th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></span>
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Email" />
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <!--address could be asked about here -->
+            <label for="active">Active</label>
+            <input type="text" th:field="*{active}" id="active" placeholder="Active" />
+            <span th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+            
+            <input type="submit" value="Update customer"/>
+        </form>
+        
+        <div th:switch="${customer}">
+            <h2 th:case="null">No customer yet!</h2>
+                <div th:case="*">
+                    <h2>Customer</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Postal code</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Active</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            <tr th:object="${customer}">
+                                <td th:text="${customer.first_name}"></td>
+                                <td th:text="${customer.last_name}"></td>
+                                <td th:text="${customer.address.address}"></td>
+                                <td th:text="${customer.address.city.city}"></td>                                
+                                <td th:text="${customer.address.postal_code}"></td>
+                                <td th:text="${customer.address.phone}"></td>
+                                <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.active}"></td> 
+                                <td><a th:tref="@{/customers/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
+                                <td><a th:tref="@{/customers/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <p><a href="/">Index</a></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Customers taken from the database</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div th:switch="${customers}">
+            <h2 th:case="null">No customers yet!</h2>
+                <div th:case="*">
+                    <h2>Customers</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Email</th>                                
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="customer : ${customers}">
+                                <td th:text="${customer.first_name}"></td>
+                                <td th:text="${customer.last_name}"></td>
+                                <td th:text="${customer.email}"></td>                                
+                                <td><a th:tref="@{/customer/edit/{id}(id=${customer.customer_id})}">Edit</a></td>
+                                <td><a th:tref="@{/customer/delete/{id}(id=${customer.customer_id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <p><a href="/">Index</a></p>
+        </div>
+    </body>
+</html>
