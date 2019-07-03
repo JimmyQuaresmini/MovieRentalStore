@@ -5,6 +5,7 @@ import moviestore.entities.Actor;
 import moviestore.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,10 @@ public class ActorController {
     private ActorRepository actorRepository;
     
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<Actor> getAllActors() { 
-        return actorRepository.findAll();
+    public String getAllActors(Model model) { 
+        Iterable<Actor> itActor = actorRepository.findAll();
+        model.addAttribute("actors", itActor);
+        return "filmActors";
     }
     
     @GetMapping(path="/add")
