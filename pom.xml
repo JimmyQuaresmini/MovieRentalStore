@@ -79,12 +79,19 @@
             <artifactId>mysql-connector-java</artifactId>
             <!--<version>5.1.23</version> only for reverse engineering-->
         </dependency>
+        
+        <!--<version>4.0.0</version> för att undvika fel vid test-->
         <dependency>
             <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.0.0</version>
+            <artifactId>rest-assured</artifactId>            
             <scope>test</scope>
-        </dependency>       
+        </dependency>
+        <!--för webtestclient nedan-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>    
     
     <build>

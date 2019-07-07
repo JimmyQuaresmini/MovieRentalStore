@@ -139,4 +139,14 @@ public class FilmController {
         List<String> itFilms = filmRepository.findFilmCategoriesByIdJoined(id);
         return itFilms; //Object
     }
+    
+    /*@GetMapping(path="/findFilmsInnerJoinedActors")
+    public @ResponseBody List<Object> findFilmsInnerJoinedActors() { //String
+        return filmRepository.findFilmsInnerJoinedActors();
+    }*/
+    
+    @GetMapping(path="/findActorsInFilmsInnerJoined")
+    public @ResponseBody List<Object> findActorsInFilmsInnerJoined() { //String
+        return filmRepository.findActorsInFilmsInnerJoinedExplicit();
+    }
 }
