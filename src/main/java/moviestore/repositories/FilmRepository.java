@@ -18,9 +18,16 @@ public interface FilmRepository extends CrudRepository<Film, Integer> {
     @Query("SELECT a.first_name, a.last_name, f.title FROM Film f JOIN f.actors a WHERE f.release_year = :year ORDER BY f.title")
     List<Film> findActorTitleByYear(@Param("year") short year);
     
-    /*@Query("SELECT new moviestore.entities.Film(f.title, f.release_year, a.last_name) FROM Film f INNER JOIN f.actors a")
+    /*@Query("SELECT new Film(f.title, f.release_year, a.last_name) FROM Film f INNER JOIN f.actors a")
     List<Film> findFilmsInnerJoinedActors();*/
     
     @Query("SELECT a.first_name, a.last_name, f.title FROM Film f JOIN f.actors a WHERE f.film_id = :id ORDER BY f.title")
     List<String> findActorTitleById(@Param("id") int id); 
+    
+    //@Query("SELECT a FROM Film f JOIN f.actors a WHERE f.film_id = :id ORDER BY a.last_name")
+    @Query("SELECT a.first_name, a.last_name, f.title FROM Film f JOIN f.actors a WHERE f.film_id = :id ORDER BY a.last_name")
+    List<Object> findActorsFilmsByIdJoined(@Param("id") int id);
+    
+    @Query("SELECT f.title, f.description, c.name FROM Film f JOIN f.categories c WHERE f.film_id = :id ORDER BY c.name")
+    List<String> findFilmCategoriesByIdJoined(@Param("id") int id);//Object
 }

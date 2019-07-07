@@ -41,8 +41,5 @@ public class ActorController {
         return "Saved actor";
     }
     
-    @GetMapping(path="/cp")
-    public @ResponseBody String getClassPath(){
-        return ("${classpath}"); //@Value
-    }
+    
 }

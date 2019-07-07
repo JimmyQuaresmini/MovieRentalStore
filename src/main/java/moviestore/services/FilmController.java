@@ -127,4 +127,16 @@ public class FilmController {
         model.addAttribute("films", filmRepository.findAll());
         return "films";
     }
+    
+    @GetMapping(path="/findActsFilmsByIdJoined/{id}")
+    public @ResponseBody List<Object> findActorsFilmsByIdJoined(@PathVariable("id") int id) { 
+        List<Object> itFilms = filmRepository.findActorsFilmsByIdJoined(id);
+        return itFilms; 
+    }
+    
+    @GetMapping(path="/findFilmCatsByIdJoined/{id}")
+    public @ResponseBody List<String> findFilmCategoriesByIdJoined(@PathVariable("id") int id) { 
+        List<String> itFilms = filmRepository.findFilmCategoriesByIdJoined(id);
+        return itFilms; //Object
+    }
 }
