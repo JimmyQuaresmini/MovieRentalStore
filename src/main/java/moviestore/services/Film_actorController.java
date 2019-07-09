@@ -1,14 +1,17 @@
 package moviestore.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import moviestore.entities.Actor;
 import moviestore.entities.Film;
 import moviestore.entities.Film_actor;
 import moviestore.repositories.Film_actorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,5 +39,23 @@ public class Film_actorController {
         fa.setLast_update(updated);
         film_actorRepository.save(fa);
         return "Saved film_actor";
+    }
+    
+    @GetMapping(path="/findActTitleByYear/{year}")
+    public @ResponseBody List<String> findActorTitleByYear(@PathVariable("year") short year) { 
+        List<String> itFilms = film_actorRepository.findActorTitleByYear(year);
+        return itFilms; 
+    }
+    
+    @GetMapping(path="/findActTitleById/{id}")
+    public @ResponseBody List<String> findActorTitleById(@PathVariable("id") int id) { 
+        List<String> itFilms = film_actorRepository.findActorTitleById(id);
+        return itFilms; 
+    }
+    
+    @GetMapping(path="/findActsFilmsByIdJoined/{id}")
+    public @ResponseBody List<Object> findActorsFilmsByIdJoined(@PathVariable("id") int id) { 
+        List<Object> itFilms = film_actorRepository.findActorsFilmsByIdJoined(id);
+        return itFilms; 
     }
 }

@@ -1,31 +1,32 @@
 package moviestore.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Jimmy
  */
 
+@Embeddable
 public class Film_catPK implements Serializable {
-    protected Film film; 
-    protected Category category; 
+    private int film_id; 
+    private int category_id; 
     
     public Film_catPK() {
         
     }
-    
-    public Film_catPK(Film film, Category category) {         
-        this.film = film;
-        this.category = category;
+
+    public Film_catPK(int film_id, int category_id) {
+        this.film_id = film_id;
+        this.category_id = category_id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.film); 
-        hash = 37 * hash + Objects.hashCode(this.category); 
+        int hash = 3;
+        hash = 29 * hash + this.film_id;
+        hash = 29 * hash + this.category_id;
         return hash;
     }
 
@@ -41,12 +42,13 @@ public class Film_catPK implements Serializable {
             return false;
         }
         final Film_catPK other = (Film_catPK) obj;
-        if (this.film != other.film) { 
+        if (this.film_id != other.film_id) {
             return false;
         }
-        if (this.category != other.category) { 
+        if (this.category_id != other.category_id) {
             return false;
         }
         return true;
     }    
+        
 }

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 /**
@@ -42,13 +43,15 @@ public class Film {
     private Set<String> specFeatString; //['Trailers','Commentaries','Deleted Scenes','Behind the Scenes']
     private String special_features;
     
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="film_actor", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="actor_id"))
-    private Set<Actor> actors;
+    //@ManyToMany(cascade=CascadeType.ALL)
+    //@JoinTable(name="film_actor", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="actor_id"))
+    @OneToMany(mappedBy = "film")
+    private Set<Film_actor> film_actors;
     
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="film_category", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="category_id"))
-    private Set<Category> categories;
+    //@ManyToMany(cascade=CascadeType.ALL)
+    //@JoinTable(name="film_category", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="category_id"))
+    @OneToMany(mappedBy = "film")
+    private Set<Film_category> film_categories;
     
     private LocalDateTime last_update;
     
@@ -158,20 +161,20 @@ public class Film {
         }        
     }
 
-    public Set<Actor> getActors() {
-        return actors;
+    public Set<Film_actor> getFilm_actors() {
+        return film_actors;
     }
 
-    public void setActors(Set<Actor> actors) {
-        this.actors = actors;
+    public void setFilm_actors(Set<Film_actor> film_actors) {
+        this.film_actors = film_actors;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Set<Film_category> getCategories() {
+        return film_categories;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategories(Set<Film_category> categories) {
+        this.film_categories = categories;
     }
     
             

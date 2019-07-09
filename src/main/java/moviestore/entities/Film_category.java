@@ -1,9 +1,8 @@
 package moviestore.entities;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -18,16 +17,38 @@ import javax.persistence.ManyToOne;
 @IdClass(Film_catPK.class)
 public class Film_category {
     @Id
+    @Column(name = "film_id", insertable = false, updatable = false)
+    private int film_id;
+    
+    @Id
+    @Column(name = "category_id", insertable = false, updatable = false)
+    private int category_id;
+    
     @ManyToOne    
     @JoinColumn(name="film_id", referencedColumnName="film_id")
     private Film film; 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+        
     @ManyToOne    
     @JoinColumn(name="category_id", referencedColumnName="category_id")
     private Category category; 
     private LocalDateTime last_update;
 
+    public int getFilm_id() {
+        return film_id;
+    }
+
+    public void setFilm_id(int film_id) {
+        this.film_id = film_id;
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+    
     public Film getFilm() { 
         return film; 
     }

@@ -81,19 +81,7 @@ public class FilmController {
     public @ResponseBody String findTitle(@PathVariable("id") int filmId) {
         return filmRepository.findTitleById(filmId);
     }
-    
-    @GetMapping(path="/findActTitleByYear/{year}")
-    public @ResponseBody List<Film> findActorTitleByYear(@PathVariable("year") short year) {
-        List<Film> itFilms = filmRepository.findActorTitleByYear(year);
-        return itFilms;
-    }
-    
-    @GetMapping(path="/findActTitleById/{id}")
-    public @ResponseBody List<String> findActorTitleById(@PathVariable("id") int id) { 
-        List<String> itFilms = filmRepository.findActorTitleById(id);
-        return itFilms; 
-    }
-        
+                
     @GetMapping(path="/edit/{id}") 
     public String editFilm(@PathVariable("id") int id, Model model) { 
         Film film = filmRepository.findById(id)
@@ -127,25 +115,20 @@ public class FilmController {
         model.addAttribute("films", filmRepository.findAll());
         return "films";
     }
-    
-    @GetMapping(path="/findActsFilmsByIdJoined/{id}")
-    public @ResponseBody List<Object> findActorsFilmsByIdJoined(@PathVariable("id") int id) { 
-        List<Object> itFilms = filmRepository.findActorsFilmsByIdJoined(id);
-        return itFilms; 
-    }
-    
-    @GetMapping(path="/findFilmCatsByIdJoined/{id}")
+            
+    //temporärt
+    /*@GetMapping(path="/findFilmCatsByIdJoined/{id}")
     public @ResponseBody List<String> findFilmCategoriesByIdJoined(@PathVariable("id") int id) { 
         List<String> itFilms = filmRepository.findFilmCategoriesByIdJoined(id);
         return itFilms; //Object
-    }
+    }*/
     
     /*@GetMapping(path="/findFilmsInnerJoinedActors")
     public @ResponseBody List<Object> findFilmsInnerJoinedActors() { //String
         return filmRepository.findFilmsInnerJoinedActors();
     }*/
     
-    @GetMapping(path="/findActorsInFilmsInnerJoined")
+    @GetMapping(path="/findActorsInFilmsInnerJoined")//not working currently
     public @ResponseBody List<Object> findActorsInFilmsInnerJoined() { //String
         return filmRepository.findActorsInFilmsInnerJoinedExplicit();
     }

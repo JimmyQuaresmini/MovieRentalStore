@@ -17,15 +17,15 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {MovieStoreMain.class}, webEnvironment
     = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@AutoConfigureWebTestClient //skulle lösa felet med webtestclient, men var...
-                            //...dependency av webflux som löste
+//@AutoConfigureWebTestClient //was supposed to solve the webtestclient error, ...
+                            //...but it was the webflux-dependency that solved it
 public class WebTest {
     @Autowired
     private WebTestClient webTestClient;
     
     @Test
     public void getFilmsOK() {
-        //får hela html-sidan som svar på första nedan så den failar med "films"
+        //all the html-page is given as a response of the first one below so it fails with "films"
         //this.webTestClient.get().uri("/film/all").exchange().expectStatus().isOk().expectBody(String.class).isEqualTo("films");
         this.webTestClient.get().uri("/film/all").exchange().expectStatus().isOk();
     }

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -20,8 +21,9 @@ public class Category {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int category_id;
     private String name;
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="categories")
-    private Set<Film> films;
+    
+    @OneToMany(mappedBy = "category")
+    private Set<Film_category> film_categories;
     private LocalDateTime last_update;
 
     public int getCategory_id() {
@@ -40,12 +42,12 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Film> getFilms() {
-        return films;
+    public Set<Film_category> getFilms() {
+        return film_categories;
     }
 
-    public void setFilms(Set<Film> films) {
-        this.films = films;
+    public void setFilms(Set<Film_category> films) {
+        this.film_categories = films;
     }
     
     
