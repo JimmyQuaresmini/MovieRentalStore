@@ -7,8 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,13 +27,18 @@ public class Store {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int store_id;    
-    @ManyToOne    
-    @JoinColumn(name="manager_staff_id", unique=true, referencedColumnName="staff_id")
+    @ManyToOne 
+    @JoinColumn(name="manager_staff_id", referencedColumnName="staff_id")
     private Staff staff;     
     @ManyToOne
-    @JoinColumn(name="address_id", unique=true, referencedColumnName="address_id")
+    @JoinColumn(name="address_id", referencedColumnName="address_id")
     private Address address; 
     private LocalDateTime last_update;
+    
+    @OneToMany(mappedBy = "store")
+    private Set<Staff> staffs = new HashSet(0);
+    @OneToMany(mappedBy = "store")
+    private Set<Inventory> inventories = new HashSet(0);
 
     public int getStore_id() {
         return store_id;
@@ -59,7 +68,42 @@ public class Store {
         return last_update;
     }
 
+    public Set getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(Set staffs) {
+        this.staffs = staffs;
+    }
+
+    public Set getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(Set inventories) {
+        this.inventories = inventories;
+    }
+    
+    
+
     public void setLast_update(LocalDateTime last_update) {
         this.last_update = last_update;
+    }
+    
+    public Store() {
+        
+    }
+	
+    public Store(Address address, Staff staff, LocalDateTime last_update) {
+        this.address = address;
+        this.staff = staff;
+        this.last_update = last_update;
+    }
+    public Store(Address address, Staff staff, LocalDateTime last_update, Set<Staff> staffs, Set<Inventory> inventories) {
+       this.address = address;
+       this.staff = staff;
+       this.last_update = last_update;
+       this.staffs = staffs;
+       this.inventories = inventories;
     }
 }

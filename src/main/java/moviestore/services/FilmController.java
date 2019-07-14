@@ -1,11 +1,15 @@
 package moviestore.services;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.validation.Valid;
 
 import moviestore.entities.Film;
+import moviestore.entities.Inventory;
 import moviestore.entities.Language;
 import moviestore.entities.Rating;
 import moviestore.repositories.FilmRepository;
@@ -40,12 +44,12 @@ public class FilmController {
     
     @GetMapping(path="/add")
     public @ResponseBody String addFilm(@RequestParam int id, @RequestParam String title,
-            @RequestParam String description, @RequestParam short releaseYear,            
+            @RequestParam String description, @RequestParam short releaseYear, //Date
             @RequestParam Language language, @RequestParam Language originalLang,
-            @RequestParam short rentalDuration, @RequestParam float rentalRate,
-            @RequestParam int length, @RequestParam float replacementCost,
-            @RequestParam Rating rating, @RequestParam String specialFeatures, 
-            @RequestParam LocalDateTime updated) {
+            @RequestParam Short rentalDuration, @RequestParam BigDecimal rentalRate, //float
+            @RequestParam Short length, @RequestParam BigDecimal replacementCost, //int //float
+            @RequestParam String rating, @RequestParam String specialFeatures, //Rating
+            @RequestParam LocalDateTime updated, @RequestParam Set<Inventory> inventories) {
         Film f = new Film();
         f.setFilm_id(id);
         f.setTitle(title);
@@ -60,8 +64,25 @@ public class FilmController {
         f.setRating(rating);
         f.setSpecial_features(specialFeatures);
         f.setLast_update(updated);
+        f.setInventories(inventories);
         filmRepository.save(f);
         return "Saved film";
+    }
+    
+    @GetMapping(path="/addShort")
+    public @ResponseBody String addFilmShort(@RequestParam String title,
+            @RequestParam Language language, @RequestParam Short rentalDuration, 
+            @RequestParam BigDecimal rentalRate, @RequestParam BigDecimal replacementCost, 
+            @RequestParam LocalDateTime updated) {
+        Film f = new Film();        
+        f.setTitle(title);        
+        f.setLanguage(language);         
+        f.setRental_duration(rentalDuration);
+        f.setRental_rate(rentalRate);        
+        f.setReplacement_cost(replacementCost);        
+        f.setLast_update(updated);        
+        filmRepository.save(f);
+        return "Saved film with fewer parameters";
     }
     
     @GetMapping(path="/find/{id}")
@@ -116,7 +137,7 @@ public class FilmController {
         return "films";
     }
             
-    //temporärt
+    //temporary
     /*@GetMapping(path="/findFilmCatsByIdJoined/{id}")
     public @ResponseBody List<String> findFilmCategoriesByIdJoined(@PathVariable("id") int id) { 
         List<String> itFilms = filmRepository.findFilmCategoriesByIdJoined(id);
@@ -128,8 +149,8 @@ public class FilmController {
         return filmRepository.findFilmsInnerJoinedActors();
     }*/
     
-    @GetMapping(path="/findActorsInFilmsInnerJoined")//not working currently
-    public @ResponseBody List<Object> findActorsInFilmsInnerJoined() { //String
+    @GetMapping(path="/findActorsInFilmsInnerJoined")
+    public @ResponseBody List<Object> findActorsInFilmsInnerJoined() { 
         return filmRepository.findActorsInFilmsInnerJoinedExplicit();
     }
 }

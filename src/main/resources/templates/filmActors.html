@@ -15,23 +15,15 @@
                         <thead>
                             <tr>
                                 <th>First name</th>
-                                <th>Last name</th>
-                                <th>Movies</th>                                
+                                <th>Last name</th>                                                              
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="actor : ${actors}">
+                            <tr th:each="actor : ${actors}, film : ${movies}">
                                 <td th:text="${actor.first_name}"></td>
-                                <td th:text="${actor.last_name}"></td>
-                                <td th:each="film : ${actor.films}"><span th:text="${film.title}"></span></td>
-                                <!--<td data-th-text="${actor.films}"></td>
-                                <td>-->
-                                    <!--<tr th:each="film : ${actor.films}">
-                                        <td data-th-text="${film.title}"></td>
-                                    </tr>-->
-                                <!--</td>-->
+                                <td th:text="${actor.last_name}"></td>                                
                                 <td><a th:href="@{/edit/{id}(id=${actor.actor_id})}">Edit</a></td>
                                 <td><a th:href="@{/delete/{id}(id=${actor.actor_id})}">Delete</a></td>
                             </tr>

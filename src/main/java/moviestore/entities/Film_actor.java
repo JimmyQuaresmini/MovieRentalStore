@@ -1,5 +1,6 @@
 package moviestore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +28,13 @@ public class Film_actor {
     
     @ManyToOne
     @MapsId("actor_id")
+    @JsonBackReference
     @JoinColumn(name = "actor_id")
     private Actor actor; //PK, FK 
     
     @ManyToOne
     @MapsId("film_id")
+    @JsonBackReference
     @JoinColumn(name = "film_id")
     private Film film; //PK, FK 
     private LocalDateTime last_update;   
