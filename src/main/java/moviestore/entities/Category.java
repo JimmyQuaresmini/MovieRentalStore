@@ -1,5 +1,6 @@
 package moviestore.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -23,7 +24,8 @@ public class Category {
     private String name;
     
     @OneToMany(mappedBy = "category")
-    private Set<Film_category> film_categories;
+    @JsonManagedReference //to prevent recursive issue combined with ...
+    private Set<Film_category> film_categories; //...@JsonBackReference in the other direction
     private LocalDateTime last_update;
 
     public int getCategory_id() {

@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/filmCategory")
+@RequestMapping("/filmCategory")
 public class Film_categoryController {
     @Autowired
     private Film_categoryRepository film_categoryRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Film_category> getAllFilmCategories() { 
         return film_categoryRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addFilm_category(@RequestParam Category category, @RequestParam Film film,
             @RequestParam LocalDateTime updated) { 
         Film_category fc = new Film_category();

@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/staff")
+@RequestMapping("/staff")
 public class StaffController {
     @Autowired
     private StaffRepository staffRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public @ResponseBody Iterable<Staff> getAllStaff() {
         return staffRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addStore(@RequestParam int id, @RequestParam Address address, 
             @RequestParam Store store, @RequestParam String firstName, 
             @RequestParam String lastName, @RequestParam byte[] picture, 
@@ -53,7 +53,7 @@ public class StaffController {
         return "Saved staff";
     }
     
-    @GetMapping(path="/addShort")
+    @GetMapping("/addShort")
     public String addStoreShort(@RequestParam Address address, @RequestParam Store store, 
             @RequestParam String firstName, @RequestParam String lastName, 
             @RequestParam Boolean active, @RequestParam String userName,

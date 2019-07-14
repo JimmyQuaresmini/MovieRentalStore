@@ -22,12 +22,12 @@ public class CityController {
     @Autowired
     private CityRepository cityRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public @ResponseBody Iterable<City> getAllCities() { 
         return cityRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public @ResponseBody String addCity(@RequestParam int id, @RequestParam String city,
             @RequestParam Country country, @RequestParam LocalDateTime updated) { 
         City c = new City();

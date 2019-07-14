@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(path="/address")
+@RequestMapping("/address")
 public class AddressController {
     @Autowired
     private AddressRepository addressRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public @ResponseBody Iterable<Address> getAllAddresses() { 
         return addressRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public @ResponseBody String addAddress(@RequestParam int id, @RequestParam String address,
             @RequestParam String address2, @RequestParam String district,
             @RequestParam City city, @RequestParam String postalCode, 

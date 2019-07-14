@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(path="/customer")
+@RequestMapping("/customer")
 public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public String getAllCustomers(Model model) { 
         Iterable<Customer> itCustomers = customerRepository.findAll();
         model.addAttribute("customers", itCustomers);
         return "customers"; 
     }
     
-    @GetMapping(path="/add") 
+    @GetMapping("/add") 
     public @ResponseBody String addCustomer(@RequestParam int id, @RequestParam Store store,
             @RequestParam String fName, @RequestParam String lName, 
             @RequestParam String email, @RequestParam Address address, 
@@ -55,7 +55,7 @@ public class CustomerController {
         return "Saved customer";
     }
     
-    @GetMapping(path="/edit/{id}") 
+    @GetMapping("/edit/{id}") 
     public String editCustomer(@PathVariable("id") int id, Model model) { 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid customer id: " + id));
@@ -64,7 +64,7 @@ public class CustomerController {
         return "updateCustomer";
     }
     
-    @PostMapping(path="/update/{id}") 
+    @PostMapping("/update/{id}") 
     public String updateCustomer(@PathVariable("id") int id, @Valid Customer customer, 
             BindingResult result, Model model) {
         if (result.hasErrors() == true) {
@@ -80,7 +80,7 @@ public class CustomerController {
         return "customers";
     }
     
-    @GetMapping(path="/delete/{id}") 
+    @GetMapping("/delete/{id}") 
     public String deleteCustomer(@PathVariable("id") int id, Model model) { 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid customer id: " + id));

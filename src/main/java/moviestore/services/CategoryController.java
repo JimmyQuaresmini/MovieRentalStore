@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(path="/category")
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all") //TODO: fix recursive error here
     public @ResponseBody Iterable<Category> getAllCategories() { 
         return categoryRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public @ResponseBody String addCategory(@RequestParam int id, @RequestParam String name,
             @RequestParam LocalDateTime updated) {
         Category c = new Category();

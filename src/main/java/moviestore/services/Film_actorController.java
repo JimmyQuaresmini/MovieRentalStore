@@ -1,7 +1,9 @@
 package moviestore.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import moviestore.entities.Actor;
 import moviestore.entities.Film;
 import moviestore.entities.Film_actor;
@@ -20,17 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/filmActor")
+@RequestMapping("/filmActor")
 public class Film_actorController {
     @Autowired
     private Film_actorRepository film_actorRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Film_actor> getAllActors() { 
         return film_actorRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addFilm_actor(@RequestParam Actor actor, @RequestParam Film film,
             @RequestParam LocalDateTime updated) { 
         Film_actor fa = new Film_actor();
@@ -41,19 +43,27 @@ public class Film_actorController {
         return "Saved film_actor";
     }
     
-    @GetMapping(path="/findActTitleByYear/{year}")
-    public @ResponseBody List<String> findActorTitleByYear(@PathVariable("year") short year) { 
-        List<String> itFilms = film_actorRepository.findActorTitleByYear(year);
+    @GetMapping(value = {"/findActTitleByYear/", "/findActTitleByYear/{year}"}) 
+    public @ResponseBody List<String> findActorTitleByYear(@PathVariable Optional<Short> year) { 
+        List<String> itFilms = new ArrayList<>();
+        if (year.isPresent() == true) {
+            System.out.println("i isPresent()==true i Film_actor nu");
+            itFilms = film_actorRepository.findActorTitleByYear(year.get()); 
+        }
+        else if (year.isPresent() == false) {
+            System.out.println("i else i Film_actor nu");
+            itFilms = film_actorRepository.findActorTitleByYear(Short.valueOf("2006"));
+        }
         return itFilms; 
     }
     
-    @GetMapping(path="/findActTitleById/{id}")
+    @GetMapping("/findActTitleById/{id}")
     public @ResponseBody List<String> findActorTitleById(@PathVariable("id") int id) { 
         List<String> itFilms = film_actorRepository.findActorTitleById(id);
         return itFilms; 
     }
     
-    @GetMapping(path="/findActsFilmsByIdJoined/{id}")
+    @GetMapping("/findActsFilmsByIdJoined/{id}")
     public @ResponseBody List<Object> findActorsFilmsByIdJoined(@PathVariable("id") int id) { 
         List<Object> itFilms = film_actorRepository.findActorsFilmsByIdJoined(id);
         return itFilms; 

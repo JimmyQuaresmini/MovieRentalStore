@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/rental")
+@RequestMapping("/rental")
 public class RentalController {
     @Autowired
     private RentalRepository rentalRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Rental> getAllRentals() {
         return rentalRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addRental(@RequestParam int id, @RequestParam LocalDateTime rentalDate, 
             @RequestParam Inventory inventory, @RequestParam Customer customer, 
             @RequestParam Staff staff, @RequestParam LocalDateTime updated) { 

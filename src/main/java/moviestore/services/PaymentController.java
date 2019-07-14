@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/payment")
+@RequestMapping("/payment")
 public class PaymentController {
     @Autowired
     private PaymentRepository paymentRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Payment> getAllStaff() { 
         return paymentRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addPayment(@RequestParam int id, @RequestParam Customer customer, 
             @RequestParam Staff staff, @RequestParam Rental rental, @RequestParam float amount, 
             @RequestParam LocalDateTime payment_date, @RequestParam LocalDateTime updated) {

@@ -39,7 +39,7 @@ public class Film implements Serializable {
     private String title;
     private String description;
     //@Temporal(javax.persistence.TemporalType.DATE)
-    private short release_year;//year in MySQL //Date //changed back to short
+    private Short release_year;//year in MySQL //Date //changed back to short
     @ManyToOne    
     @JoinColumn(name="language_id", referencedColumnName="language_id")
     private Language language;

@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/language")
+@RequestMapping("/language")
 public class LanguageController {
     @Autowired
     private LanguageRepository languageRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Language> getAllLanguages() { 
         return languageRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addLanguage(@RequestParam int id, @RequestParam String name,
             @RequestParam LocalDateTime updated, 
             @RequestParam Set<Film> languageFilms, @RequestParam Set<Film> origLangFilms) {
@@ -42,7 +42,7 @@ public class LanguageController {
         return "Saved language";
     }
     
-    @GetMapping(path="/addShort")
+    @GetMapping("/addShort")
     public String addLanguageShort(@RequestParam String name,
             @RequestParam LocalDateTime updated) {
         Language l = new Language();        

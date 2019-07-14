@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 
 @RestController
-@RequestMapping(path="/store")
+@RequestMapping("/store")
 public class StoreController {
     @Autowired
     private StoreRepository storeRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public @ResponseBody Iterable<Store> getAllStores() { 
         return storeRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addStore(@RequestParam int id, @RequestParam Address address, 
             @RequestParam Staff staff, @RequestParam LocalDateTime updated, 
             Set<Staff> staffs, Set<Inventory> inventories) { 
@@ -45,7 +45,7 @@ public class StoreController {
         return "Saved store";
     }
     
-    @GetMapping(path="/addShort")
+    @GetMapping("/addShort")
     public String addStoreShort(@RequestParam Address address, 
             @RequestParam Staff staff, @RequestParam LocalDateTime updated) { 
         Store s = new Store();        

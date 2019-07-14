@@ -1,5 +1,6 @@
 package moviestore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,11 +25,13 @@ public class Film_category {
     @Column(name = "category_id", insertable = false, updatable = false)
     private int category_id;
     
-    @ManyToOne    
+    @ManyToOne
+    @JsonBackReference //to prevent recursive issue
     @JoinColumn(name="film_id", referencedColumnName="film_id")
     private Film film; 
         
-    @ManyToOne    
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name="category_id", referencedColumnName="category_id")
     private Category category; 
     private LocalDateTime last_update;

@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(path="/country")
+@RequestMapping("/country")
 public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public @ResponseBody Iterable<Country> getAllCountries() { 
         return countryRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public @ResponseBody String addCountry(@RequestParam int id, @RequestParam String country,
             @RequestParam LocalDateTime updated) {
         Country c = new Country();

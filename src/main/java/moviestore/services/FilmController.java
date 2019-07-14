@@ -42,9 +42,9 @@ public class FilmController {
         return "films"; 
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public @ResponseBody String addFilm(@RequestParam int id, @RequestParam String title,
-            @RequestParam String description, @RequestParam short releaseYear, //Date
+            @RequestParam String description, @RequestParam Short releaseYear, //Date
             @RequestParam Language language, @RequestParam Language originalLang,
             @RequestParam Short rentalDuration, @RequestParam BigDecimal rentalRate, //float
             @RequestParam Short length, @RequestParam BigDecimal replacementCost, //int //float
@@ -69,7 +69,7 @@ public class FilmController {
         return "Saved film";
     }
     
-    @GetMapping(path="/addShort")
+    @GetMapping("/addShort")
     public @ResponseBody String addFilmShort(@RequestParam String title,
             @RequestParam Language language, @RequestParam Short rentalDuration, 
             @RequestParam BigDecimal rentalRate, @RequestParam BigDecimal replacementCost, 
@@ -85,7 +85,7 @@ public class FilmController {
         return "Saved film with fewer parameters";
     }
     
-    @GetMapping(path="/find/{id}")
+    @GetMapping("/find/{id}")
     public @ResponseBody Film findFilm(@PathVariable("id") int filmId) {
         Optional<Film> f = filmRepository.findById(filmId);
         if (f.isPresent() == true) {
@@ -98,12 +98,12 @@ public class FilmController {
         }
     }
     
-    @GetMapping(path="/findTitle/{id}")
+    @GetMapping("/findTitle/{id}")
     public @ResponseBody String findTitle(@PathVariable("id") int filmId) {
         return filmRepository.findTitleById(filmId);
     }
                 
-    @GetMapping(path="/edit/{id}") 
+    @GetMapping("/edit/{id}") 
     public String editFilm(@PathVariable("id") int id, Model model) { 
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid film id: " + id));
@@ -112,7 +112,7 @@ public class FilmController {
         return "updateFilm";
     }
     
-    @PostMapping(path="/update/{id}") 
+    @PostMapping("/update/{id}") 
     public String updateFilm(@PathVariable("id") int id, @Valid Film film, 
             BindingResult result, Model model) {
         if (result.hasErrors() == true) {
@@ -128,7 +128,7 @@ public class FilmController {
         return "films";
     }
     
-    @GetMapping(path="/delete/{id}") 
+    @GetMapping("/delete/{id}") 
     public String deleteFilm(@PathVariable("id") int id, Model model) { 
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid film id: " + id));
@@ -149,7 +149,7 @@ public class FilmController {
         return filmRepository.findFilmsInnerJoinedActors();
     }*/
     
-    @GetMapping(path="/findActorsInFilmsInnerJoined")
+    @GetMapping("/findActorsInFilmsInnerJoined")
     public @ResponseBody List<Object> findActorsInFilmsInnerJoined() { 
         return filmRepository.findActorsInFilmsInnerJoinedExplicit();
     }

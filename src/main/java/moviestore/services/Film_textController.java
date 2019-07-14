@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/filmText")
+@RequestMapping("/filmText")
 public class Film_textController {
     @Autowired
     private Film_textRepository film_textRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Film_text> getAllFilmTexts() { 
         return film_textRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addFilm_text(@RequestParam int id, @RequestParam String title,
             @RequestParam String description) {
         Film_text ft = new Film_text();

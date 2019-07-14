@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path="/inventory")
+@RequestMapping("/inventory")
 public class InventoryController {
     @Autowired
     private InventoryRepository inventoryRepository;
     
-    @GetMapping(path="/all")
+    @GetMapping("/all")
     public Iterable<Inventory> getAllInventory() { //@ResponseBody
         return inventoryRepository.findAll();
     }
     
-    @GetMapping(path="/add")
+    @GetMapping("/add")
     public String addInventory(@RequestParam int id, @RequestParam Film film, 
             @RequestParam Store store, @RequestParam LocalDateTime updated) { 
         Inventory i = new Inventory();
