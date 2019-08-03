@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Add inventories page</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="/views.css" />
+    </head>
+    <body>
+        <h1>Add inventories</h1>
+        <h3>Fill in the form to add inventories</h3>
+        <div>Chose film to add inventory for, and then number of inventories per store</div>
+                
+        <!-- th:object="${inventory}"  -->
+        <form action="#" th:action="@{/inventory/addInventories}" method="post">
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="film : ${films}">
+                    <input type="radio" id="radioFilm" value="radioFilm" name="filmRadioBtns" 
+                           th:value="${film.title}" />
+                    <label for="radioFilm" th:text="'Film: ' + ${film.title}"></label>                                               
+                </li>
+            </ul>
+                        
+            <label for="store1Inventories">Store 1 inventories</label>
+            <input type="number" id="store1Inventories" name="store1Inventories" min="0" max="6" value="1" />            
+            <label for="store2Inventories">Store 2 inventories</label>
+            <input type="number" id="store2Inventories" name="store2Inventories" min="0" max="6" value="1" />
+                        
+            <input type="submit" value="Add inventories"/>
+        </form>
+            
+        <br/>
+        <div th:text="${successMsg}"></div>
+        <br/>
+        
+        <p><a href="/">Index</a></p>
+        <p>Back to all films <a href="/film/all">page</a></p>
+    </body>
+</html>

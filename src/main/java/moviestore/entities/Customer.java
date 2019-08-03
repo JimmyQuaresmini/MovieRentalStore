@@ -17,7 +17,7 @@ import javax.validation.constraints.Email;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int customer_id;    
     @ManyToOne    
     @JoinColumn(name="store_id", referencedColumnName="store_id")
@@ -32,6 +32,22 @@ public class Customer {
     private int active;
     private LocalDateTime create_date;
     private LocalDateTime last_update;
+
+    public Customer() {
+        
+    }
+
+    public Customer(Store store, String first_name, String last_name, String email, Address address) {
+        this.store = store;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.address = address;
+        
+        active = 1;
+        create_date = LocalDateTime.now();
+        last_update = LocalDateTime.now();
+    }    
 
     public int getCustomer_id() {
         return customer_id;

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Chose customer and store</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="/views.css" />
+    </head>
+    <body>
+        <h1>Chose Customer and Store</h1>
+        <div>You have to chose Store and Customer separately, one at a time</div>
+        <div>Once you have chosen both, you will be taken to the rent film page</div>
+        <div>After you have chosen either Store or Customer, they will no longer be listed</div>
+                
+        <form action="#" th:action="@{/rental/saveStore}" method="post" th:object="${rentalStore}">             
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="store : ${stores}"> 
+                    <input type="radio" id="idStoreInside" value="radioForStore" name="storeRadioBtnsIn" 
+                           th:value="${store.store_id}" /> 
+                    <label for="idStoreInside" 
+                           th:text="'Store: ' + ${store.store_id}"></label>                    
+                </li>
+            </ul>
+            
+            <br/>
+            <br/>            
+            
+            <input type="submit" value="Chose store"/>
+        </form>
+        
+        <br/>
+        <hr/>
+        <br/>
+        
+        <!-- could show first_name, last_name and store(of the customer, just the ID),
+            but it's OK like I have it now as well -->
+        <form action="#" th:action="@{/rental/storeCustomer}" method="post" th:object="${rentalCustomer}">
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="customer : ${customers}">
+                    <input type="radio" id="radioForCustomerInside" value="radioForCustomerInside" name="customerRadioBtnsIn" 
+                           th:value="${customer.customer_id}" />
+                    <label for="radioForCustomerInside" 
+                           th:text="'Customer: ' + ${customer.customer_id} + ', ' + ${customer.first_name}"></label>                    
+                </li>
+            </ul>
+            
+            <input type="submit" value="Chose customer"/>
+        </form>
+        
+        <br/>
+        <div th:text="${chosenStoreMsg}"></div>
+        <div th:text="${chosenCustomerMsg}"></div>
+    </body>
+</html>

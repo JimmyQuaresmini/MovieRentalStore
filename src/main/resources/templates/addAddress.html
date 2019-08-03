@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Add a new address page</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>        
+        <link rel="stylesheet" type="text/css" href="/views.css" />
+    </head>
+    <body>
+        <h1>Add an address</h1>
+        <h3>Fill in the form to add an address</h3>
+        
+        <form action="#" th:action="@{/address/addAddress}" th:object="${newAddress}" method="post">
+            <label for="address">Address</label>
+            <input type="text" th:field="*{address}" id="address" placeholder="Address" size="30" />
+            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+            <label for="postal_code">Postal code</label>
+            <input type="text" th:field="*{postal_code}" id="postal_code" placeholder="Postal code" size="10" />
+            <span th:if="${#fields.hasErrors('postal_code')}" th:errors="*{postal_code}"></span>            
+                        
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="city : ${cities}">
+                    <input type="radio" id="radioCity" value="radioCity" name="cityRadioBtns" 
+                           th:value="${city.city}" />
+                    <label for="radioCity" th:text="'City: ' + ${city.city}"></label>                                               
+                </li>
+            </ul>                    
+                        
+            <input type="submit" value="Add address"/>
+        </form>
+            
+        <br/>
+        <div th:text="${successMsg}"></div>
+        <br/>
+        
+        <p><a href="/">Index</a></p>
+        <p>Back to add customer <a href="/customer/addCustomerPage">page</a></p>
+    </body>
+</html>

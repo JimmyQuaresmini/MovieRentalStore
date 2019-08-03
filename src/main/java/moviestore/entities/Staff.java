@@ -26,7 +26,7 @@ import javax.validation.constraints.Email;
   property = "staff_id")
 public class Staff {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int staff_id;
     private String first_name;
     private String last_name;
@@ -149,7 +149,8 @@ public class Staff {
         
     }
 	
-    public Staff(Address address, Store store, String firstName, String lastName, boolean active, String username, LocalDateTime last_update) {
+    public Staff(Address address, Store store, String firstName, String lastName, Boolean active, 
+            String username, LocalDateTime last_update) {
         this.address = address;
         this.store = store;
         this.first_name = firstName;
@@ -158,7 +159,9 @@ public class Staff {
         this.username = username;
         this.last_update = last_update;
     }
-    public Staff(Address address, Store store, String firstName, String lastName, byte[] picture, String email, boolean active, String username, String password, LocalDateTime last_update, Set<Store> stores) {
+    public Staff(Address address, Store store, String firstName, String lastName, byte[] picture, 
+            String email, Boolean active, String username, String password, 
+            LocalDateTime last_update, Set<Store> stores) {
        this.address = address;
        this.store = store;
        this.first_name = firstName;

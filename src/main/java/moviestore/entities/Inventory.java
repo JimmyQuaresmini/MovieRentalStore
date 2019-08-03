@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
   property = "inventory_id")
 public class Inventory {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int inventory_id;
     @ManyToOne(optional=false)
     @JsonBackReference
@@ -67,8 +67,16 @@ public class Inventory {
     }
     
     public Inventory() {
+        
     }
-
+    
+    public Inventory(Film film, Store store) {
+       this.film = film;
+       this.store = store;
+       
+       last_update = LocalDateTime.now();
+    }
+    
     public Inventory(Film film, Store store, LocalDateTime last_update) {
        this.film = film;
        this.store = store;

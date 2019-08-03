@@ -15,3 +15,11 @@ tr:nth-child(even) {
     background-color: aquamarine; /*floralwhite*/
 }
 
+input[type=number] {
+    width: 5em;
+}
+
+.ulInFormsWithoutBullets {
+    list-style:none;
+}
+

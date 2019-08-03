@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 public class Country {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int country_id;
     private String country;
     private LocalDateTime last_update;

@@ -25,7 +25,7 @@ import javax.persistence.OneToMany;
   property = "store_id") //helps prevent a recursive error caused by staff also having store
 public class Store {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int store_id;    
     @ManyToOne 
     @JoinColumn(name="manager_staff_id", referencedColumnName="staff_id")

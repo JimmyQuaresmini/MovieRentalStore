@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int address_id;
     private String address;
     private String address2;
@@ -28,7 +28,7 @@ public class Address {
     @Column(nullable = true)
     private String postal_code;
     @Column(nullable = true)
-    private String phone;    
+    private Long phone; //String   
     private byte[] location;
     private LocalDateTime last_update;
 
@@ -80,11 +80,11 @@ public class Address {
         this.postal_code = postal_code;
     }
 
-    public String getPhone() {
+    public Long getPhone() { //String
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) { //String
         this.phone = phone;
     }
 
@@ -105,9 +105,10 @@ public class Address {
     }
     
     public Address() {
+        
     }
     
-    public Address(City city, String address, String district, String phone, byte[] location, LocalDateTime lastUpdate) {
+    public Address(City city, String address, String district, Long phone, byte[] location, LocalDateTime lastUpdate) {
         this.city = city;        
         this.address = address;
         this.district = district;
@@ -116,7 +117,7 @@ public class Address {
         this.last_update = lastUpdate;
     }
     
-    public Address(City city, String address, String address2, String district, String postalCode, String phone, byte[] location, LocalDateTime lastUpdate) {
+    public Address(City city, String address, String address2, String district, String postalCode, Long phone, byte[] location, LocalDateTime lastUpdate) {
        this.city = city;    
        this.address = address;
        this.address2 = address2;
@@ -126,4 +127,19 @@ public class Address {
        this.location = location;
        this.last_update = lastUpdate;
     }
+        
+    //all posts seem to have address, district, city(_id), location(blob) and last_update(apart from id)
+    public Address(String address, City city, String postal_code) {
+        this.address = address;
+        this.city = city;
+        this.postal_code = postal_code;
+        
+        district = "My District";
+        phone = 199514580428L;
+        //this byte[] is for address id 602 in West Greece just to compare or use temporarily
+        location = new byte[]{0, 0, 0, 0, 1, 1, 0, 0, 0, -86, -63, -22, 126, 4, -68, 53, 64, -26, 95, 38, -27, 73, 31, 67, 64};
+        last_update = LocalDateTime.now();
+    }
+    
+    
 }

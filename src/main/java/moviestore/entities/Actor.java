@@ -16,14 +16,14 @@ import javax.persistence.OneToMany;
 @Entity
 public class Actor {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int actor_id;
     //@Size(max =
     private String first_name;    
     private String last_name;    
     @OneToMany(mappedBy = "actor")
     private Set<Film_actor> film_actors;
-    //@Temporal(TemporalType
+    //@Temporal(TemporalType //(javax.persistence.TemporalType.DATE)
     private LocalDateTime last_update;
 
     public int getActor_id() {

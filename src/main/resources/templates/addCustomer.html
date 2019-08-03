@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Add a new customer page</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type='text/javascript' src='/films.js'> </script>
+        <link rel="stylesheet" type="text/css" href="/views.css" />
+    </head>
+    <body>
+        <h1>Add a customer</h1>
+        <h3>Fill in the form to add a customer</h3>
+        
+        <form action="#" th:action="@{/customer/addCustomer}" th:object="${customer}" method="post">
+            <label for="first_name">First name</label>
+            <input type="text" th:field="*{first_name}" id="first_name" placeholder="First name" size="30" />
+            <span th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></span>
+            <label for="last_name">Last name</label>
+            <input type="text" th:field="*{last_name}" id="last_name" placeholder="Last name" size="30" />
+            <span th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></span>
+            <label for="email">Email</label>
+            <input type="email" th:field="*{email}" id="email" placeholder="Email" size="50" />
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="address : ${addresses}">
+                    <input type="radio" id="radioAddress" value="radioAddress" name="addressRadioBtns" 
+                           th:value="${address.address}" />
+                    <label for="radioAddress" th:text="'Address: ' + ${address.address}"></label>                                               
+                </li>
+            </ul>
+                                                
+            <ul class="ulInFormsWithoutBullets">                
+                <li>
+                    <input type="radio" id="radioStore1" value="radioStore" name="storeRadioBtns" 
+                           th:value="1" />
+                    <label for="radioStore1" th:text="'Store: 1'"></label>                                               
+                </li>
+                <li>
+                    <input type="radio" id="radioStore2" value="radioStore" name="storeRadioBtns" 
+                           th:value="2" />
+                    <label for="radioStore2" th:text="'Store: 2'"></label>                                               
+                </li>                
+            </ul>            
+                        
+            <input type="submit" value="Add customer"/>
+        </form>
+        
+        <br/>
+        <p><a href="/address/addAddressPage">Add address</a></p>
+            
+        <br/>
+        <div th:text="${successMsg}"></div>
+        <br/>
+        
+        <p><a href="/">Index</a></p>
+        <p>Back to all <a href="/customer/all">customers</a></p>
+    </body>
+</html>

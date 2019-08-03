@@ -1,5 +1,6 @@
 package moviestore.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int payment_id;
     @ManyToOne
     @JoinColumn(name="customer_id", referencedColumnName="customer_id")
@@ -27,9 +28,23 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name="rental_id", nullable=false, referencedColumnName="rental_id")
     private Rental rental; 
-    private float amount;
+    private BigDecimal amount; //float
     private LocalDateTime payment_date;
     private LocalDateTime last_update;
+
+    public Payment() {
+        
+    }
+
+    public Payment(Customer customer, Staff staff, Rental rental, BigDecimal amount) {
+        this.customer = customer;
+        this.staff = staff;
+        this.rental = rental;
+        this.amount = amount;
+        
+        payment_date = LocalDateTime.now();
+        last_update = LocalDateTime.now();
+    }    
     
     public int getPayment_id() {
         return payment_id;
@@ -63,11 +78,11 @@ public class Payment {
         this.rental = rental; 
     }
 
-    public float getAmount() {
+    public BigDecimal getAmount() { //float
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(BigDecimal  amount) { //float
         this.amount = amount;
     }
 

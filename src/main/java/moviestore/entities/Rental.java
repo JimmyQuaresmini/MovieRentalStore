@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Rental {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int rental_id;
     private LocalDateTime rental_date;
     @ManyToOne 
@@ -30,6 +30,22 @@ public class Rental {
     @JoinColumn(name="staff_id", referencedColumnName="staff_id")
     private Staff staff; 
     private LocalDateTime last_update;
+    
+    public Rental() {
+        
+    }
+
+    public Rental(Inventory inventory, Customer customer, LocalDateTime return_date, Staff staff) {        
+        this.inventory = inventory;
+        this.customer = customer;
+        this.return_date = return_date;
+        this.staff = staff;
+        
+        this.rental_date = LocalDateTime.now();
+        this.last_update = LocalDateTime.now();
+    }
+    
+    
 
     public int getRental_id() {
         return rental_id;

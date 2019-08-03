@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 public class Film_text {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int film_id;
     private String title;
     private String description;   

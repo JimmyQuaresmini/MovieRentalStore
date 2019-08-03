@@ -1,7 +1,9 @@
 package moviestore.repositories;
 
 import java.util.List;
+import java.util.Set;
 import moviestore.entities.Film;
+import moviestore.entities.Inventory;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository; //JpaRepository
 import org.springframework.data.repository.query.Param;
@@ -35,4 +37,9 @@ public interface FilmRepository extends CrudRepository<Film, Integer> {
     //"SELECT ph FROM Employee e JOIN e.phones ph WHERE ph LIKE '1%'" //alias //wildcard    
     //"SELECT d FROM Employee e, Department d" //cartesian
     
+    @Query("SELECT f FROM Film f WHERE f.title = :title")
+    Film findFilmWithTitle(@Param("title") String filmTitle);
+    
+    @Query("SELECT f.inventories FROM Film f WHERE f.film_id = :id")
+    Set<Inventory> findInventoriesByFilmId(@Param("id") int id);
 }

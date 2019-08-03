@@ -1,30 +1,21 @@
 package moviestore.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.Convert;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.Transient;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -34,45 +25,34 @@ import javax.persistence.Transient;
 @Entity
 public class Film implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int film_id;
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+    @GenericGenerator(name="native", strategy="native")//to make it use "Identity" rather with MySQL5.7 or 8
+    private int film_id;//can also use "IDENTITY" rather than "AUTO" above
     private String title;
-    private String description;
-    //@Temporal(javax.persistence.TemporalType.DATE)
-    private Short release_year;//year in MySQL //Date //changed back to short
+    private String description;    
+    private Short release_year;//year in MySQL 
     @ManyToOne    
     @JoinColumn(name="language_id", referencedColumnName="language_id")
     private Language language;
     @ManyToOne    
-    @JoinColumn(name="original_language_id", referencedColumnName="language_id") //nullable=false, 
+    @JoinColumn(name="original_language_id", referencedColumnName="language_id") 
     private Language language2; 
     private Short rental_duration;
-    private BigDecimal rental_rate; //float
-    private Short length; //int
-    private BigDecimal replacement_cost; //float
-    //@Convert(converter = RatingConverter.class)
-    private String rating; //Rating
-        
-    //@Transient 
-    //private Set<String> specFeatString; //['Trailers','Commentaries','Deleted Scenes','Behind the Scenes']
-    private String special_features;
-    
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name="film_actor", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="actor_id"))
-    @OneToMany(mappedBy = "film", fetch=FetchType.LAZY, cascade = CascadeType.ALL)//, fetch=FetchType.LAZY
+    private BigDecimal rental_rate; 
+    private Short length; 
+    private BigDecimal replacement_cost; 
+    private String rating;         
+    //['Trailers','Commentaries','Deleted Scenes','Behind the Scenes']
+    private String special_features;    
+    @OneToMany(mappedBy = "film", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Film_actor> film_actors;
-    
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name="film_category", joinColumns=@JoinColumn(name="film_id"), inverseJoinColumns=@JoinColumn(name="category_id"))
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Film_category> film_categories;
     
     private LocalDateTime last_update;
-    
-    //only thing left, but should not be a column, so not sure how to do this
-    //@JsonIgnore
+        
     @OneToMany(mappedBy = "film", fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
     @JsonManagedReference
     private Set<Inventory> inventories = new HashSet(0);
@@ -101,11 +81,11 @@ public class Film implements Serializable {
         this.description = description;
     }
 
-    public short getRelease_year() {
+    public Short getRelease_year() {
         return release_year;
     }
 
-    public void setRelease_year(short release_year) {        
+    public void setRelease_year(Short release_year) { 
         this.release_year = release_year;
     }
 
@@ -157,41 +137,19 @@ public class Film implements Serializable {
         this.replacement_cost = replacement_cost;
     }
 
-    public String getRating() { //Rating
+    public String getRating() { 
         return rating;
     }
 
-    public void setRating(String rating) { //Rating
+    public void setRating(String rating) { 
         this.rating = rating;
     }
-
-    //this should not be in the database so I don't want this here, 
-    //but add for the object itself
-    /*public Set<String> getSpecFeatString() {
-        return specFeatString;
-    }
-
-    public void setSpecFeatString(Set<String> specFeatString) {
-        this.specFeatString = specFeatString;
-    }*/
     
-    
-    
-    public String getSpecial_features() { 
-        /*if (specFeatString == null)
-            return null;
-        else
-            return String.join(",", specFeatString);*/
+    public String getSpecial_features() {         
         return special_features;
     }
     
-    public void setSpecial_features(String special_features) {             
-        /*String[] tempStrings = special_features.split(",");
-        for (int i = 0; 0 < tempStrings.length; i++) {
-            if (specFeatString.contains(tempStrings[i]) == false) {
-                specFeatString.add(tempStrings[i]);
-            }
-        }*/ 
+    public void setSpecial_features(String special_features) { 
         this.special_features = special_features;
     }
 
@@ -203,14 +161,6 @@ public class Film implements Serializable {
         this.film_actors = film_actors;
     }
 
-    /*public Set<Film_category> getCategories() {
-        return film_categories;
-    }
-
-    public void setCategories(Set<Film_category> film_categories) {
-        this.film_categories = film_categories;
-    }*/ //didn't get it right
-
     public Set<Film_category> getFilm_categories() {
         return film_categories;
     }
@@ -218,9 +168,6 @@ public class Film implements Serializable {
     public void setFilm_categories(Set<Film_category> film_categories) {
         this.film_categories = film_categories;
     }
-    
-    
-    
             
     public LocalDateTime getLast_update() {
         return last_update;
@@ -238,60 +185,26 @@ public class Film implements Serializable {
         this.inventories = inventories;
     }
     
-    
 
+    //several different constructors follows for various needs
     public Film() {
+        
     }
     
-    public Film(String title, Language language, Short rental_duration, BigDecimal rental_rate, BigDecimal replacement_cost, LocalDateTime last_update) {
+    public Film(String title, Language language, Short rental_duration, BigDecimal rental_rate, 
+            BigDecimal replacement_cost, LocalDateTime last_update) {
         this.title = title;
         this.language = language;
         this.rental_duration = rental_duration;
         this.rental_rate = rental_rate;
         this.replacement_cost = replacement_cost;
         this.last_update = last_update;
-    }
-    //public Film(Language languageByLanguageId, Language languageByOriginalLanguageId, String title, String description, Date releaseYear, byte rentalDuration, BigDecimal rentalRate, Short length, BigDecimal replacementCost, String rating, String specialFeatures, Date lastUpdate, Set inventories) {
-    //int film_id,  //Set<String> specFeatString, //Set<Film_actor> film_actors, Set<Film_category> film_categories, 
-    public Film(String title, String description, short release_year, Language language, Language language2, Short rental_duration, BigDecimal rental_rate, Short length, BigDecimal replacement_cost, String rating, String special_features, LocalDateTime last_update, Set<Inventory> inventories) {
-        //this.film_id = film_id;
-        this.title = title;
-        this.description = description;
-        this.release_year = release_year;
-        this.language = language;
-        this.language2 = language2;
-        this.rental_duration = rental_duration;
-        this.rental_rate = rental_rate;
-        this.length = length;
-        this.replacement_cost = replacement_cost;
-        this.rating = rating;
-        //this.specFeatString = specFeatString;
-        this.special_features = special_features;
-        //this.film_actors = film_actors;
-        //this.film_categories = film_categories;
-        this.last_update = last_update;
-        this.inventories = inventories;
     }
     
-    //added by me#1
-    public Film(int film_id, String title, String description, short release_year, Language language, Language language2, Short rental_duration, BigDecimal rental_rate, Short length, BigDecimal replacement_cost, String rating, String special_features, LocalDateTime last_update) {
-        this.film_id = film_id;
-        this.title = title;
-        this.description = description;
-        this.release_year = release_year;
-        this.language = language;
-        this.language2 = language2;
-        this.rental_duration = rental_duration;
-        this.rental_rate = rental_rate;
-        this.length = length;
-        this.replacement_cost = replacement_cost;
-        this.rating = rating;
-        this.special_features = special_features;
-        this.last_update = last_update;
-    }
-    //added by me#2
-    public Film(int film_id, String title, String description, short release_year, Language language, Language language2, Short rental_duration, BigDecimal rental_rate, Short length, BigDecimal replacement_cost, String rating, String special_features, LocalDateTime last_update, Set<Inventory> inventories) {
-        this.film_id = film_id;
+    public Film(String title, String description, short release_year, Language language, 
+            Language language2, Short rental_duration, BigDecimal rental_rate, Short length, 
+            BigDecimal replacement_cost, String rating, String special_features, 
+            LocalDateTime last_update, Set<Inventory> inventories) {
         this.title = title;
         this.description = description;
         this.release_year = release_year;
@@ -306,93 +219,59 @@ public class Film implements Serializable {
         this.last_update = last_update;
         this.inventories = inventories;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.film_id;
-        hash = 67 * hash + Objects.hashCode(this.title);
-        hash = 67 * hash + Objects.hashCode(this.description);
-        hash = 67 * hash + Objects.hashCode(this.release_year);
-        hash = 67 * hash + Objects.hashCode(this.language);
-        hash = 67 * hash + Objects.hashCode(this.language2);
-        hash = 67 * hash + Objects.hashCode(this.rental_duration);
-        hash = 67 * hash + Objects.hashCode(this.rental_rate);
-        hash = 67 * hash + Objects.hashCode(this.length);
-        hash = 67 * hash + Objects.hashCode(this.replacement_cost);
-        hash = 67 * hash + Objects.hashCode(this.rating);
-        hash = 67 * hash + Objects.hashCode(this.special_features);
-        hash = 67 * hash + Objects.hashCode(this.film_actors);
-        hash = 67 * hash + Objects.hashCode(this.film_categories);
-        hash = 67 * hash + Objects.hashCode(this.last_update);
-        hash = 67 * hash + Objects.hashCode(this.inventories);
-        return hash;
+    
+    
+    public Film(int film_id, String title, String description, short release_year, 
+            Language language, Language language2, Short rental_duration, BigDecimal rental_rate, 
+            Short length, BigDecimal replacement_cost, String rating, String special_features, 
+            LocalDateTime last_update) {
+        this.film_id = film_id;
+        this.title = title;
+        this.description = description;
+        this.release_year = release_year;
+        this.language = language;
+        this.language2 = language2;
+        this.rental_duration = rental_duration;
+        this.rental_rate = rental_rate;
+        this.length = length;
+        this.replacement_cost = replacement_cost;
+        this.rating = rating;
+        this.special_features = special_features;
+        this.last_update = last_update;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Film other = (Film) obj;
-        if (this.film_id != other.film_id) {
-            return false;
-        }
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.rating, other.rating)) {
-            return false;
-        }
-        if (!Objects.equals(this.special_features, other.special_features)) {
-            return false;
-        }
-        if (!Objects.equals(this.release_year, other.release_year)) {
-            return false;
-        }
-        if (!Objects.equals(this.language, other.language)) {
-            return false;
-        }
-        if (!Objects.equals(this.language2, other.language2)) {
-            return false;
-        }
-        if (!Objects.equals(this.rental_duration, other.rental_duration)) {
-            return false;
-        }
-        if (!Objects.equals(this.rental_rate, other.rental_rate)) {
-            return false;
-        }
-        if (!Objects.equals(this.length, other.length)) {
-            return false;
-        }
-        if (!Objects.equals(this.replacement_cost, other.replacement_cost)) {
-            return false;
-        }
-        if (!Objects.equals(this.film_actors, other.film_actors)) {
-            return false;
-        }
-        if (!Objects.equals(this.film_categories, other.film_categories)) {
-            return false;
-        }
-        if (!Objects.equals(this.last_update, other.last_update)) {
-            return false;
-        }
-        if (!Objects.equals(this.inventories, other.inventories)) {
-            return false;
-        }
-        return true;
+    
+    public Film(int film_id, String title, String description, short release_year, 
+            Language language, Language language2, Short rental_duration, BigDecimal rental_rate, 
+            Short length, BigDecimal replacement_cost, String rating, String special_features, 
+            LocalDateTime last_update, Set<Inventory> inventories) {
+        this.film_id = film_id;
+        this.title = title;
+        this.description = description;
+        this.release_year = release_year;
+        this.language = language;
+        this.language2 = language2;
+        this.rental_duration = rental_duration;
+        this.rental_rate = rental_rate;
+        this.length = length;
+        this.replacement_cost = replacement_cost;
+        this.rating = rating;
+        this.special_features = special_features;
+        this.last_update = last_update;
+        this.inventories = inventories;
     }
-
     
-    
-    
+    public Film(String title, String description, Short release_year, Language language, 
+            Short rental_duration, BigDecimal rental_rate, Short length, BigDecimal replacement_cost, 
+            String rating, String special_features) {
+        this.title = title;
+        this.description = description;
+        this.release_year = release_year;
+        this.language = language;
+        this.rental_duration = rental_duration;
+        this.rental_rate = rental_rate;
+        this.length = length;
+        this.replacement_cost = replacement_cost;
+        this.rating = rating;
+        this.special_features = special_features;
+    }
 }

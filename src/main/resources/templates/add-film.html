@@ -4,18 +4,129 @@
         <title>Add a film to the rental store's database</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type='text/javascript' src='/films.js'> </script>
+        <link rel="stylesheet" type="text/css" href="/views.css" />
     </head>
     <body>
-        <div>Fill in the form to add a film</div>
+        <h1>Add a film</h1>
+        <h3>Fill in the form to add a film</h3>
         
-        <form action="#" th:action="@{/addfilm}" th:object="${film}" method="post">
+        <form action="#" th:action="@{/film/addfilm}" th:object="${film}" method="post">
             <label for="title">Title</label>
-            <input type="text" th:field="*{title}" id="title" placeholder="Title" />
+            <input type="text" th:field="*{title}" id="title" placeholder="Title" size="30" />
             <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
             <label for="description">Description</label>
-            <input type="text" th:field="*{description}" id="description" placeholder="Description"/>
+            <input type="text" th:field="*{description}" id="description" placeholder="Description" size="100" />
             <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            <label for="release_year">Release year</label>
+            <input type="number" th:field="*{release_year}" id="release_year" min="1900" max="2022"/>
+            <span th:if="${#fields.hasErrors('release_year')}" th:errors="*{release_year}"></span>
+            
+            <!--<label for="filmsLanguage">Language</label> -->
+            <ul class="ulInFormsWithoutBullets">
+                <li th:each="language : ${languages}">
+                    <input type="radio" id="radioLanguage" value="radioLanguage" name="languageRadioBtns" 
+                           th:value="${language.name}" />
+                    <label for="radioLanguage" th:text="'Language: ' + ${language.name}"></label>                                               
+                </li>
+            </ul>
+            
+            <!--<input type="text" th:field="*{filmsLanguage}" id="filmsLanguage" placeholder="Language"/>
+            <span th:if="${#fields.hasErrors('filmsLanguage')}" th:errors="*{filmsLanguage}"></span>-->
+            
+            <!--<label for="original_language">Original language</label>
+            <select>
+                <option value=""></option>
+            </select>
+            <input type="text" th:field="*{original_language}" id="original_language" placeholder="Original language"/>
+            <span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span> -->
+            <label for="rental_duration">Rental duration</label>
+            <input type="number" th:field="*{rental_duration}" id="rental_duration" min="3" max="7" value="3"/>
+            <span th:if="${#fields.hasErrors('rental_duration')}" th:errors="*{rental_duration}"></span>
+            
+            <!--rental rate(big decimal), length(short), replacement cost(big decimal), rating, special features,
+                (film_actors(onetomany), film_categories(onetomany)), last update, (inventories(onetomany)) -->
+            
+            <label for="rental_rate">Rental rate</label>
+            <input type="number" th:field="*{rental_rate}" id="rental_rate" min="0.99" max="4.99" value="0.99" step="2"/>
+            <span th:if="${#fields.hasErrors('rental_rate')}" th:errors="*{rental_rate}"></span>
+            <label for="length">Length</label>
+            <input type="number" th:field="*{length}" id="length" min="40" max="200" value="40" />
+            <span th:if="${#fields.hasErrors('length')}" th:errors="*{length}"></span>
+            <label for="replacement_cost">Replacement cost</label>
+            <input type="number" th:field="*{replacement_cost}" id="replacement_cost" min="9.99" max="29.99" value="9.99"/>
+            <span th:if="${#fields.hasErrors('replacement_cost')}" th:errors="*{replacement_cost}"></span>
+            
+            <!-- for Rating and Special features: use option also -->
+            <!--<label for="rating">Rating</label>
+            <input type="text" th:field="*{rating}" id="rating" placeholder="Rating"/>
+            <span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></span>-->
+            <ul class="ulInFormsWithoutBullets">                
+                <li>
+                    <input type="radio" id="radioRatingG" value="radioRating" name="ratingRadioBtns" 
+                           th:value="G" />
+                    <label for="radioRatingG" th:text="'Rating: ' + 'G'"></label>                                               
+                </li>
+                <li>
+                    <input type="radio" id="radioRatingPG" value="radioRating" name="ratingRadioBtns" 
+                           th:value="PG" />
+                    <label for="radioRatingPG" th:text="'Rating: PG'"></label>                                               
+                </li>
+                <li>
+                    <input type="radio" id="radioRatingPG13" value="radioRating" name="ratingRadioBtns" 
+                           th:value="PG-13" />
+                    <label for="radioRatingPG13" th:text="'Rating: PG-13'"></label>                                               
+                </li>
+                <li>
+                    <input type="radio" id="radioRatingNC17" value="radioRating" name="ratingRadioBtns" 
+                           th:value="NC-17" />
+                    <label for="radioRatingNC17" th:text="'Rating: NC-17'"></label>                                               
+                </li>
+                <li>
+                    <input type="radio" id="radioRatingR" value="radioRating" name="ratingRadioBtns" 
+                           th:value="R" />
+                    <label for="radioRatingR" th:text="'Rating: R'"></label>                                               
+                </li>
+            </ul>
+            
+            <!-- will try something special for this. will use the checkboxes...
+                ...to fill in the text-field for special features; th:field="*{special_features}" -->
+            <label for="special_features">Special features</label>
+            <input type="text" id="special_features" name="specialFeatures"
+                placeholder="Special features. Use check boxes and button to fill this text box." size="65" />
+            <!--<span th:if="${#fields.hasErrors('special_features')}" th:errors="*{special_features}"></span>-->
+            <button type="button" onclick="checkAndFill()">Fill Special Features</button>
+            <ul class="ulInFormsWithoutBullets">
+                <li>
+                    <input type="checkbox" id="checkboxSpecialFeatures" value="checkboxSpecialFeatures" name="specialFeaturesCheckBoxs" 
+                           th:value="Trailers" />
+                    <label for="checkboxSpecialFeatures" th:text="'Special features: Trailers'"></label>                                               
+                </li>                
+                <li>
+                    <input type="checkbox" id="checkboxSFCommentaries" value="checkboxSpecialFeatures" name="specialFeaturesCheckBoxs" 
+                           th:value="Commentaries" />
+                    <label for="checkboxSFCommentaries" th:text="'Special features: Commentaries'"></label>                                               
+                </li>
+                <li>
+                    <input type="checkbox" id="checkboxSFDeletedScenes" value="checkboxSpecialFeatures" name="specialFeaturesCheckBoxs" 
+                           th:value="'Deleted Scenes'" />
+                    <label for="checkboxSFDeletedScenes" th:text="'Special features: Deleted Scenes'"></label>                                               
+                </li>
+                <li>
+                    <input type="checkbox" id="checkboxSFBehindTheScenes" value="checkboxSpecialFeatures" name="specialFeaturesCheckBoxs" 
+                           th:value="'Behind the Scenes'" />
+                    <label for="checkboxSFBehindTheScenes" th:text="'Special features: Behind the Scenes'"></label>                                               
+                </li>
+            </ul>
+            
             <input type="submit" value="Add film"/>
         </form>
+            
+        <br/>
+        <div th:text="${successMsg}"></div>
+        <br/>
+        
+        <p><a href="/">Index</a></p>
+        <p>Back to all <a href="/film/all">films</a></p>
     </body>
 </html>

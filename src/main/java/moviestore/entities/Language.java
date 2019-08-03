@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Language {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int language_id;
     private String name;
     private LocalDateTime last_update;
